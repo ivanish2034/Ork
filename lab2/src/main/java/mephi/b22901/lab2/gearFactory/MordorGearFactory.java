@@ -13,10 +13,18 @@ import mephi.b22901.lab2.weapon.mordor.*;
  */
 public class MordorGearFactory implements OrcGearFactory {
     @Override
-    public Weapon createWeapon() { return new HeavySword(); }
+    public Weapon createWeapon() { 
+        return new HeavySword(); 
+    }
+    
     @Override
-    public Armor createArmor() { return new SteelArmor(); }
+    public Armor createArmor() { 
+        return new SteelArmor(); 
+    }
+    
     @Override
-    public Banner createBanner() { return new RedEyeBanner(); }
+    public Banner createBanner() { 
+        return new RedEyeBanner(); 
+    }
 }
 

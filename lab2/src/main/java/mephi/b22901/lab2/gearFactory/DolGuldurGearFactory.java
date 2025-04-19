@@ -13,10 +13,18 @@ import mephi.b22901.lab2.weapon.dolguldur.*;
  */
 public class DolGuldurGearFactory implements OrcGearFactory {
     @Override
-    public Weapon createWeapon() { return new Spear(); }
+    public Weapon createWeapon() { 
+        return new Spear(); 
+    }
+    
     @Override
-    public Armor createArmor() { return new Chainmail(); }
+    public Armor createArmor() { 
+        return new Chainmail(); 
+    }
+    
     @Override
-    public Banner createBanner() { return new SpiderBanner(); }
+    public Banner createBanner() { 
+        return new SpiderBanner(); 
+    }
 }
 

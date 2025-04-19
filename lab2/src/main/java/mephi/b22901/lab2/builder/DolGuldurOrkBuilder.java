@@ -29,7 +29,11 @@ public class DolGuldurOrkBuilder extends OrkBuilder {
 
     @Override
     public void equip(boolean isScout) {
-        ork.weapon = isScout ? new Bow() : gearFactory.createWeapon();
+        if (isScout) {
+            ork.weapon = new Bow();
+        } else {
+            ork.weapon = gearFactory.createWeapon();
+        }
         ork.armor = gearFactory.createArmor();
     }
 }

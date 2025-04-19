@@ -13,10 +13,18 @@ import mephi.b22901.lab2.weapon.mistyMountains.*;
  */
 public class MistyMountainsGearFactory implements OrcGearFactory {
     @Override
-    public Weapon createWeapon() { return new Axe(); }
+    public Weapon createWeapon() { 
+        return new Axe(); 
+    }
+    
     @Override
-    public Armor createArmor() { return new LeatherArmor(); }
+    public Armor createArmor() { 
+        return new LeatherArmor(); 
+    }
+    
     @Override
-    public Banner createBanner() { return new MoonBanner(); }
+    public Banner createBanner() { 
+        return new MoonBanner(); 
+    }
 }
 
