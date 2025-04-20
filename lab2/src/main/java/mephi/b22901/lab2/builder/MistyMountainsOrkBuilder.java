@@ -31,7 +31,7 @@ public class MistyMountainsOrkBuilder extends OrkBuilder {
         if(isScout){
             ork.weapon = new Bow();
         } else{
-            gearFactory.createWeapon();
+            ork.weapon = gearFactory.createWeapon();
         }
         ork.armor = gearFactory.createArmor();
     }

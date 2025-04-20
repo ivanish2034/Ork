@@ -11,7 +11,6 @@
         <exec.mainClass>mephi.b22901.lab2.Lab2</exec.mainClass>
     </properties>
     <dependencies>
-    <!-- Другие зависимости -->
     
     <dependency>
         <groupId>com.github.javafaker</groupId>
