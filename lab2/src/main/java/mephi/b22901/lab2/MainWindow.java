@@ -25,7 +25,6 @@ public class MainWindow extends JFrame {
     private JComboBox<String> tribeComboBox, roleComboBox;
     private OrkBuilderFactory orkBuilderFactory;
     private OrcDirector orcDirector;
-
     private List<Ork> allOrks = new ArrayList<>();
     
     public MainWindow() {
@@ -63,11 +62,12 @@ public class MainWindow extends JFrame {
         orkInfoPanel.add(new JScrollPane(orkInfo), BorderLayout.NORTH);
 
         JPanel statsPanel = new JPanel(new GridLayout(1, 4, 5, 5));
-        statsPanel.add(createStatPanel(strengthBar = new JProgressBar(0, 100), "Сила"));
-        statsPanel.add(createStatPanel(agilityBar = new JProgressBar(0, 100), "Ловкость"));
-        statsPanel.add(createStatPanel(intelligenceBar = new JProgressBar(0, 50), "Интеллект"));
-        statsPanel.add(createStatPanel(healthBar = new JProgressBar(0, 200), "Здоровье"));
-        
+        statsPanel.add(createStatPanel(strengthBar = new JProgressBar(0, 100), "Сила","#FF8347", "#006400"));  
+        statsPanel.add(createStatPanel(agilityBar = new JProgressBar(0, 100), "Ловкость","#00FF00", "#006400"));  
+        statsPanel.add(createStatPanel(intelligenceBar = new JProgressBar(0, 50), "Интеллект","#00BFFF", "#006400"));  
+        statsPanel.add(createStatPanel(healthBar = new JProgressBar(0, 200), "Здоровье","#FF4000", "#006400"));  
+
+
         orkInfoPanel.add(statsPanel, BorderLayout.CENTER);
         
         JPanel controlPanel = new JPanel();
@@ -111,16 +111,7 @@ public class MainWindow extends JFrame {
         String selectedTribe = (String) tribeComboBox.getSelectedItem();
         String selectedRole = (String) roleComboBox.getSelectedItem();
 
-        if (selectedTribe == null || selectedRole == null) {
-            JOptionPane.showMessageDialog(this, "Выберите племя и роль.");
-            return;
-        }
-
         OrkBuilder builder = orkBuilderFactory.createBuilder(selectedTribe);
-        if (builder == null) {
-            JOptionPane.showMessageDialog(this, "Не удалось создать билдера для племени: " + selectedTribe);
-            return;
-        }
 
         Ork ork;
         switch (selectedRole) {
@@ -134,12 +125,6 @@ public class MainWindow extends JFrame {
                 ork = orcDirector.createBasicOrk(builder);
                 break;
         }
-
-        if (ork == null) {
-            JOptionPane.showMessageDialog(this, "Орк не был создан.");
-            return;
-        }
-
         allOrks.add(ork);
 
         DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
@@ -174,15 +159,37 @@ public class MainWindow extends JFrame {
     private void displayOrkInfo(Ork ork) {
         if (ork == null) return;
 
+        String weaponName;
+        if (ork.getWeapon() != null) {
+            weaponName = ork.getWeapon().getClass().getSimpleName();
+        } else {
+            weaponName = "—";
+        }
+
+        String armorName;
+        if (ork.getArmor() != null) {
+            armorName = ork.getArmor().getClass().getSimpleName();
+        } else {
+            armorName = "—";
+        }
+
+        String bannerName;
+        if (ork.getBanner() != null) {
+            bannerName = ork.getBanner().getClass().getSimpleName();
+        } else {
+            bannerName = "Нет";
+        }
+
         orkInfo.setText("Имя: " + ork.getName() + "\n" +
                         "Племя: " + ork.getTribe() + "\n" +
-                        "Оружие: " + (ork.getWeapon() != null ? ork.getWeapon().getClass().getSimpleName() : "—") + "\n" +
-                        "Броня: " + (ork.getArmor() != null ? ork.getArmor().getClass().getSimpleName() : "—") + "\n" +
-                        "Знамя: " + (ork.getBanner() != null ? ork.getBanner().getClass().getSimpleName() : "Нет") + "\n" +
+                        "Оружие: " + weaponName + "\n" +
+                        "Броня: " + armorName + "\n" +
+                        "Знамя: " + bannerName + "\n" +
                         "Сила: " + ork.getStrength() + "\n" +
                         "Ловкость: " + ork.getAgility() + "\n" +
                         "Интеллект: " + ork.getIntelligence() + "\n" +
                         "Здоровье: " + ork.getHealth());
+
 
         strengthBar.setValue(ork.getStrength());
         agilityBar.setValue(ork.getAgility());
@@ -197,7 +204,7 @@ public class MainWindow extends JFrame {
             String orkName = node.toString();
 
             for (Ork ork : allOrks) {
-                if (ork.getName().equals(orkName)) {
+                if (orkName.equals(ork.getName())) {
                     displayOrkInfo(ork);
                     break;
                 }
@@ -205,18 +212,37 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private JPanel createStatPanel(JProgressBar bar, String labelText) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        bar.setStringPainted(true);
-        panel.add(bar);
+//    private JPanel createStatPanel(JProgressBar bar, String labelText) {
+//        JPanel panel = new JPanel();
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+//        bar.setStringPainted(true);
+//        panel.add(bar);
+//
+//        JLabel label = new JLabel(labelText, SwingConstants.CENTER);
+//        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        panel.add(label);
+//
+//        return panel;
+//    }
+    private JPanel createStatPanel(JProgressBar bar, String labelText, String barColorHex, String textColorHex) {
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel(labelText, SwingConstants.CENTER);
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(label);
+    bar.setStringPainted(true);
+    bar.setForeground(Color.decode(barColorHex)); // цвет заполнения прогресс-бара
+    bar.setBackground(Color.DARK_GRAY);            // цвет фона прогресс-бара
+    panel.add(bar);
 
-        return panel;
-    }
+    JLabel label = new JLabel(labelText, SwingConstants.CENTER);
+    label.setForeground(Color.decode(textColorHex)); // цвет текста подписи
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    panel.add(label);
+
+    return panel;
+}
+
+
+
 
 }
 
