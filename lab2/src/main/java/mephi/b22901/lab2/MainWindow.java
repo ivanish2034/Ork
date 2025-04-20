@@ -212,29 +212,17 @@ public class MainWindow extends JFrame {
         }
     }
 
-//    private JPanel createStatPanel(JProgressBar bar, String labelText) {
-//        JPanel panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-//        bar.setStringPainted(true);
-//        panel.add(bar);
-//
-//        JLabel label = new JLabel(labelText, SwingConstants.CENTER);
-//        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        panel.add(label);
-//
-//        return panel;
-//    }
     private JPanel createStatPanel(JProgressBar bar, String labelText, String barColorHex, String textColorHex) {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
     bar.setStringPainted(true);
-    bar.setForeground(Color.decode(barColorHex)); // цвет заполнения прогресс-бара
-    bar.setBackground(Color.DARK_GRAY);            // цвет фона прогресс-бара
+    bar.setForeground(Color.decode(barColorHex)); 
+    bar.setBackground(Color.DARK_GRAY);          
     panel.add(bar);
 
     JLabel label = new JLabel(labelText, SwingConstants.CENTER);
-    label.setForeground(Color.decode(textColorHex)); // цвет текста подписи
+    label.setForeground(Color.decode(textColorHex)); 
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     panel.add(label);
 
